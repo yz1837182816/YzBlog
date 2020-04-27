@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yz.mapper.TypeMapper">
+    <insert id="save">
+        INSERT INTO t_type VALUES (null , #{typename})
+    </insert>
+
+    <select id="getList" resultType="com.yz.pojo.Type">
+        SELECT type_id id,NAME,COUNT(t_type.name) COUNT FROM t_blog LEFT JOIN t_type ON t_type.id = t_blog.type_id GROUP BY t_type.name
+    </select>
+
+    <update id="update">
+        update t_type set name = #{typename}  where id = #{id}
+    </update>
+
+    <update id="delete">
+        update t_type set name = null  where id = #{id}
+    </update>
+</mapper>

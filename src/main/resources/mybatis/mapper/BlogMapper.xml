@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yz.mapper.BlogMapper">
+    <select id="queryBlog" resultType="com.yz.pojo.Blog">
+        SELECT t_blog.id,title,NAME typeName,recommend,update_time updateTime,published FROM t_blog LEFT JOIN t_type ON type_id = t_type.id WHERE t_type.id = #{typeId} AND recommend = #{recommend} AND title LIKE CONCAT('%',#{title},'%')
+    </select>
+
+    <select id="getBlogById" resultType="com.yz.pojo.Blog">
+        SELECT id,title,content,first_picture firstPicture,flag,appreciation,commentabled,recommend,type_id typeId,description,tag_ids tagIds,update_time updateTime,create_time createTime FROM t_blog where id = #{id}
+    </select>
+
+    <select id="getIndexBlogList" resultType="com.yz.pojo.Blog">
+        SELECT t_blog.id,title,content,first_picture firstPicture,NAME typeName,flag,appreciation,commentabled,recommend,type_id typeId,description,tag_ids tagIds,update_time updateTime,published,views FROM t_blog LEFT JOIN t_type ON type_id = t_type.id ORDER BY t_blog.id DESC
+    </select>
+
+    <select id="getBlogsByKeyValue" resultType="com.yz.pojo.Blog">
+        SELECT t_blog.id,title,content,first_picture firstPicture,NAME typeName,flag,appreciation,commentabled,recommend,type_id typeId,description,tag_ids tagIds,update_time updateTime,published FROM t_blog LEFT JOIN t_type ON type_id = t_type.id WHERE title LIKE CONCAT('%',#{keyWord},'%') OR description LIKE CONCAT('%',#{keyWord},'%') ORDER BY t_blog.id DESC
+    </select>
+
+    <select id="getBlogsByType" resultType="com.yz.pojo.Blog">
+        SELECT t_blog.id,title,content,first_picture firstPicture,NAME typeName,flag,appreciation,commentabled,recommend,type_id typeId,description,tag_ids tagIds,update_time updateTime,published,views FROM t_blog LEFT JOIN t_type ON type_id = t_type.id WHERE t_type.id = #{id} ORDER BY t_blog.id DESC
+    </select>
+
+    <select id="getBlogsByTag" resultType="com.yz.pojo.Blog">
+        SELECT t_blog.id,title,content,first_picture firstPicture,NAME typeName,flag,appreciation,commentabled,recommend,type_id typeId,description,tag_ids tagIds,update_time updateTime,published,views FROM t_blog LEFT JOIN t_type ON type_id = t_type.id WHERE #{id} LIKE CONCAT('%',t_type.id,'%') ORDER BY t_blog.id DESC
+    </select>
+
+    <insert id="saveBlog">
+        INSERT INTO t_blog VALUES (null ,#{title},#{content},#{firstPicture},#{flag},0,#{appreciation},#{shareStatement},#{commentabled},#{published},#{recommend},#{createTime},#{updateTime},#{typeId},1,#{description},#{tagIds})
+    </insert>
+
+    <update id="addViews">
+        UPDATE t_blog SET views = views + 1 WHERE id = #{id}
+    </update>
+
+    <update id="updateBlog">
+        UPDATE t_blog set title = #{title},content = #{content},first_picture = #{firstPicture},flag = #{flag}, appreciation = #{appreciation},commentabled = #{commentabled},published = #{published},recommend = #{recommend},update_time = #{updateTime},type_id = #{typeId},description = #{description},tag_ids = #{tagIds} where id = #{id}
+    </update>
+
+    <delete id="deleteBlog">
+        DELETE from t_blog where id = #{id}
+    </delete>
+
+
+</mapper>

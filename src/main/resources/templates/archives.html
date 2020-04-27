@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="_fragments :: head">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>杨钊的个人博客，以致知点亮世界</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/diy.css">
+</head>
+<body>
+<!--导航-->
+<nav th:replace="_fragments :: menu(4)" class="ui inverted attached segment m-padded-tb-mini m-opacity-mini m-shadow-small">
+    <!--菜单栏的容器-->
+    <div class="ui container">
+        <!--菜单栏 stackable：可堆叠的（手机端响应）-->
+        <div class="ui inverted secondary stackable menu">
+            <!--logo：teal深绿色 item条目-->
+            <h2 class="ui teal header item">
+                YangZhaoBlog
+            </h2>
+            <!--其他选项：xxx icon 图标-->
+            <a href="#" class="m-item item m-mobile-hide"><i class="home icon"></i>首页</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="clone icon"></i>归档</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="info icon"></i>关于我</a>
+            <!--搜索框：右对齐-->
+            <div class="right m-item item m-mobile-hide">
+                <div class="ui icon inverted transparent input">
+                    <input type="text" placeholder="搜索点我哦！">
+                    <i class="search link icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+<!--中间内容-->
+<div class="m-container m-padded-tb-large">
+    <div class="ui container">
+        <!--头部：显示博客数量，同首页-->
+        <div class="ui top attached padded segment">
+            <div class="ui middle two column grid">
+                <div class="column">
+                    <h3 class="ui teal header">归档</h3>
+                </div>
+                <div class="right aligned column">
+                    共 <h3 class="ui orange header m-inline-block m-text-thin">14</h3>篇
+                </div>
+            </div>
+        </div>
+        <!--头部：显示博客数量，同首页-->
+        <h2 class="ui center aligned header">
+            2020
+        </h2>
+        <div class="ui fluid vertical menu" th:each="blog:${blogs20}">
+            <a href="#" target="_blank" class="item" th:href="@{/toBlog/{id}(id=${blog.getId()})}">
+                <span>
+                    <i class="mini teal circle icon"></i><span th:text="${blog.getTitle()}">我的第一篇博客</span>
+                    <div class="ui teal basic left pointing label m-padded-mini m-text-thin" th:text="${#dates.format(blog.getUpdateTime(),'yyyy月MM')}">4月12</div>
+                </span>
+                <div class="ui yellow basic left pointing label m-padded-mini m-text-thin" th:text="${blog.getFlag()}">原创</div>
+            </a>
+        </div>
+        <h2 class="ui center aligned header">
+            2019
+        </h2>
+        <div class="ui fluid vertical menu" th:each="blog:${blogs19}">
+            <a href="#" target="_blank" class="item" th:href="@{/toBlog/{id}(id=${blog.getId()})}">
+                <span>
+                    <i class="mini teal circle icon" th:text="${blog.getTitle()}"></i>我的第一篇博客
+                    <div class="ui teal basic left pointing label m-padded-mini m-text-thin" th:text="${#dates.format(blog.getUpdateTime(),'yyyy月MM')}">4月12</div>
+                </span>
+                <div class="ui yellow basic left pointing label m-padded-mini m-text-thin" th:text="${blog.getFlag()}">原创</div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!--底部-->
+<footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
+    <!--底部的容器 center aligned：居中-->
+    <div class="ui center aligned container">
+        <!--布局：全局分为16份 divided：包含分割线-->
+        <div class="ui inverted divided stackable grid">
+            <!--第一块：3份-->
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <p class="ui inverted">联系作者微信</p>
+                        <!--图片：round圆角-->
+                        <img src="../static/images/wechat.jpg" class="ui round image" alt="作者微信：yz1837182816"
+                             style="width: 120px">
+                    </div>
+                </div>
+            </div>
+            <!--第二块：3份-->
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced m-opacity-mini">最新博客</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">博客一号</a>
+                    <a href="#" class="item">博客二号</a>
+                    <a href="#" class="item">博客三号</a>
+                </div>
+            </div>
+            <!--第三块：3份-->
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced m-opacity-mini">联系作者</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">Email: yangzhaomm@163.com</a>
+                    <a href="#" class="item">微信: yz1837182816</a>
+                    <a href="#" class="item">QQ: 1837182816</a>
+                    <!--QQ推广链接-->
+                    <a target="_blank" href="tencent://message/?uin=1837182816&site=www.qq.com&menu=yes" class="item">点击此处QQ在线联系作者</a>
+                </div>
+            </div>
+            <!--第四块：7份-->
+            <div class="seven wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced m-opacity-mini">博客见解</h4>
+                <p class="m-text-thin m-text-spaced m-opacity-mini">
+                    hello world!
+                </p>
+            </div>
+        </div>
+        <!--分割线-->
+        <div class="ui inverted section divider"></div>
+        <!--商标版权-->
+        <p class="m-text-thin m-text-spaced m-opacity-big">Copyright &copy; 2020-2021 YangZhaoBlog Designed by YangZhao</p>
+    </div>
+</footer>
+
+<div th:replace="_fragments :: script">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+</div>
+
+<script>
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    })
+</script>
+</body>
+
+</html>

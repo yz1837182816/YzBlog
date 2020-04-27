@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="_fragments :: head">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博客管理</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/diy.css">
+</head>
+<body>
+<!--导航-->
+<nav class="ui inverted attached segment m-padded-tb-mini m-opacity-mini m-shadow-small">
+    <!--菜单栏的容器-->
+    <div class="ui container">
+        <!--菜单栏 stackable：可堆叠的（手机端响应）-->
+        <div class="ui inverted secondary stackable menu">
+            <!--logo：teal深绿色 item条目-->
+            <h2 class="ui teal header item">
+                管理后台
+            </h2>
+            <!--其他选项：xxx icon 图标-->
+            <a href="#" class="active m-item item m-mobile-hide"><i class="home icon"></i>博客</a>
+            <a href="#" th:href="@{/toCtrlTypes}" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
+            <a href="#" th:href="@{/toCtrlTags}" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+            <div class="right m-item m-mobile-hide menu">
+                <div class="ui dropdown item">
+                    <div class="text">
+                        <img src="../../static/images/head.jpg" th:src="@{/images/head.jpg}" alt="" class="ui avatar image">
+                        杨钊
+                    </div>
+                    <div class="menu">
+                        <a href="./login.html" th:href="@{/toLogout}" class="item">注销</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+<!--二级导航：选项栏-->
+<div class="ui attached pointing menu">
+    <div class="ui container">
+        <div class="right menu">
+            <a href="#" th:href="@{/toInput}" class="item">发布</a>
+            <a href="#" class="teal active item">列表</a>
+        </div>
+    </div>
+</div>
+
+<!--中间内容-->
+<div class="m-container m-padded-tb-large">
+    <div class="ui container">
+        <!--编辑博客提交表单-->
+        <form action="#" method="post" class="ui segment form" th:action="@{/queryBlog}">
+            <div class="inline fields">
+                <div class="field">
+                    <input type="text" name="title" placeholder="标题">
+                </div>
+                <div class="field">
+                    <div class="ui selection dropdown">
+                        <input type="hidden" name="typeId">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">分类</div>
+                        <div class="menu">
+                            <div th:each="type : ${types}" class="item" data-value="1" th:data-value="${type.getId()}" th:text="${type.getName()}">错误日志</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" id="recommend" name="recommend">
+                        <label for="recommend">推荐</label>
+                    </div>
+                </div>
+                <div class="field">
+                    <button class="ui mini teal basic button" id="search-btn" type="submit"><i class="search icon"></i>搜索</button>
+                </div>
+            </div>
+        </form>
+        <!--内容展示-->
+        <table class="ui celled table">
+            <thead>
+            <tr>
+                <th></th>
+                <th>标题</th>
+                <th>类型</th>
+                <th>推荐</th>
+                <th>发布状态</th>
+                <th>更新时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="blog:${page}">
+                <td th:text="${blog.getId()}">id</td>
+                <td th:text="${blog.getTitle()}">title</td>
+                <td th:text="${blog.getTypeName()}">type_name</td>
+                <td th:text="${blog.isRecommend()?'是':'否'}">recommend</td>
+                <td th:text="${blog.isPublished()?'已发布':'草稿'}">published</td>
+                <td th:text="${blog.parseUpdateDate()}">update_time</td>
+                <td>
+                    <a href="#" class="ui mini teal basic button" th:href="@{/{id}/updateBlog(id=${blog.getId()})}">编辑</a>
+                    <a href="#" class="ui mini red basic button" th:href="@{/{id}/deleteBlog(id=${blog.getId()})}" onclick="return confirm('您确定要删除吗？')">删除</a>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="7">
+                        <div class="ui floated pagination menu">
+                            <a class="item">
+                                上一页
+                            </a>
+                            <a class="item">
+                                下一页
+                            </a>
+                        </div>
+                        <a href="#" th:href="@{/toInput}" class="ui mini right floated teal basic button">新增</a>
+                    </th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<!--底部-->
+<footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
+    <!--底部的容器 center aligned：居中-->
+    <div class="ui center aligned container">
+        <!--布局：全局分为16份 divided：包含分割线-->
+        <div class="ui inverted divided stackable grid">
+            <!--第一块：3份-->
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <p class="ui inverted">联系作者微信</p>
+                        <!--图片：round圆角-->
+                        <img src="../../static/images/wechat.jpg" class="ui round image" alt="作者微信：yz1837182816"
+                             style="width: 120px">
+                    </div>
+                </div>
+            </div>
+            <!--第二块：3份-->
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced m-opacity-mini">最新博客</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">博客一号</a>
+                    <a href="#" class="item">博客二号</a>
+                    <a href="#" class="item">博客三号</a>
+                </div>
+            </div>
+            <!--第三块：3份-->
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced m-opacity-mini">联系作者</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">Email: yangzhaomm@163.com</a>
+                    <a href="#" class="item">微信: yz1837182816</a>
+                    <a href="#" class="item">QQ: 1837182816</a>
+                    <!--QQ推广链接-->
+                    <a target="_blank" href="tencent://message/?uin=1837182816&site=www.qq.com&menu=yes" class="item">点击此处QQ在线联系作者</a>
+                </div>
+            </div>
+            <!--第四块：7份-->
+            <div class="seven wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced m-opacity-mini">博客见解</h4>
+                <p class="m-text-thin m-text-spaced m-opacity-mini">
+                    hello world!
+                </p>
+            </div>
+        </div>
+        <!--分割线-->
+        <div class="ui inverted section divider"></div>
+        <!--商标版权-->
+        <p class="m-text-thin m-text-spaced m-opacity-big">Copyright &copy; 2020-2021 YangZhaoBlog Designed by YangZhao</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+<script>
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    })
+
+    $('.ui.dropdown').dropdown({
+     on : 'hover'
+    });
+</script>
+</body>
+
+</html>

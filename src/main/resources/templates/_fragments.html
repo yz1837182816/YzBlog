@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!--css模板-->
+<head th:fragment="head">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>杨钊的个人博客，以致知点亮世界</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+        <link rel="stylesheet" href="../static/css/diy.css" th:href="@{/css/diy.css}">
+        <link rel="stylesheet" href="../static/css/typo.css" th:href="@{/css/typo.css}">
+        <link rel="stylesheet" href="../static/css/animate.css" th:href="@{/css/animate.css}">
+        <link rel="stylesheet" href="../static/lib/prism/prism.css" th:href="@{/lib/prism/prism.css}">
+        <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css" th:href="@{/lib/tocbot/tocbot.css}">
+        <link rel="stylesheet" href="../static/css/animate.css" th:href="@{/css/animate.css}">
+        <link rel="stylesheet" href="../static/lib/editormd/css/editormd.min.css" th:href="@{/lib/editormd/css/editormd.min.css}">
+</head>
+<body>
+<!--导航模板-->
+<nav th:fragment="menu(n)" class="ui inverted attached segment m-padded-tb-mini m-opacity-mini m-shadow-small">
+    <!--菜单栏的容器-->
+    <div class="ui container">
+        <!--菜单栏 stackable：可堆叠的（手机端响应）-->
+        <div class="ui inverted secondary stackable menu">
+            <!--logo：teal深绿色 item条目-->
+            <h2 class="ui teal header item">
+                YangZhaoBlog
+            </h2>
+            <!--其他选项：xxx icon 图标-->
+            <a href="#" th:href="@{/toIndex}" class="m-item item m-mobile-hide" th:classappend="${n==1} ? 'active'"><i class="home icon"></i>首页</a>
+            <a href="#" th:href="@{/typeQuery/1}" class="m-item item m-mobile-hide" th:classappend="${n==2} ? 'active'"><i class="idea icon"></i>分类</a>
+            <a href="#" th:href="@{/toTags}" class="m-item item m-mobile-hide" th:classappend="${n==3} ? 'active'"><i class="tags icon"></i>标签</a>
+            <a href="#" th:href="@{/toArchives}" class="m-item item m-mobile-hide" th:classappend="${n==4} ? 'active'"><i class="clone icon"></i>归档</a>
+            <a href="#" th:href="@{/toAbout}" class="m-item item m-mobile-hide" th:classappend="${n==5} ? 'active'"><i class="info icon"></i>关于我</a>
+            <!--搜索框：右对齐-->
+            <div class="right m-item item m-mobile-hide">
+                <form name="search" action="#" method="post" th:action="@{/toSearch}" target="_blank">
+                    <div class="ui icon inverted transparent input">
+                        <input type="text" name="query" placeholder="搜索点我哦！">
+                        <i onclick="document.forms['search'].submit()" class="search link icon"></i>
+                    </div>
+                </form>
+                <div sec:authorize="!isAuthenticated()">
+                    <a href="./login.html" th:href="@{/admin/ctrl}" class="m-item item m-mobile-hide">登录</a>
+                </div>
+                <div sec:authorize="isAuthenticated()">
+                    <a href="./login.html" th:href="@{/toLogout}" class="m-item item m-mobile-hide">注销</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+<!--底部模板-->
+<footer th:fragment="footer" class="ui inverted vertical segment m-padded-tb-massive">
+    <!--底部的容器 center aligned：居中-->
+    <div class="ui center aligned container">
+        <!--布局：全局分为16份 divided：包含分割线-->
+        <div class="ui inverted divided stackable grid">
+            <!--第一块：3份-->
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <p class="ui inverted">联系作者微信</p>
+                        <!--图片：round圆角-->
+                        <img src="../static/images/wechat.jpg" th:src="@{/images/wechat.jpg}" class="ui round image" alt="作者微信：yz1837182816"
+                             style="width: 120px">
+                    </div>
+                </div>
+            </div>
+            <!--第二块：3份-->
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced m-opacity-mini">合作声明</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">全栈开发网站</a>
+                    <a href="#" class="item">网站架构</a>
+                    <a href="#" class="item">java代码快速纠错</a>
+                    <a href="#" class="item">java入门教学</a>
+                </div>
+            </div>
+            <!--第三块：3份-->
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced m-opacity-mini">联系作者</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">Email: yangzhaomm@163.com</a>
+                    <a href="#" class="item">微信: yz1837182816</a>
+                    <a href="#" class="item">QQ: 1837182816</a>
+                    <!--QQ推广链接-->
+                    <a target="_blank" href="tencent://message/?uin=1837182816&site=www.qq.com&menu=yes" class="item">点击此处QQ在线联系作者</a>
+                </div>
+            </div>
+            <!--第四块：7份-->
+            <div class="seven wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced m-opacity-mini">博客见解</h4>
+                <p class="m-text-thin m-text-spaced m-opacity-mini">
+                    hello(≧ω≦)! 欢迎访问杨钊的个人博客，之前一直有在使用typora记录学习笔记，但是由于笔记不便于分享知识，我便想到，为什么不写一个博客来分享我的知识呢？于是我就做了这个博客，希望能给来访的朋友们分享一些有用的经验，用通俗易懂的语言解释复杂晦涩的知识！
+                </p>
+            </div>
+        </div>
+        <!--分割线-->
+        <div class="ui inverted section divider"></div>
+        <!--商标版权-->
+        <p class="m-text-thin m-text-spaced m-opacity-big">Copyright &copy; 2020-2021 YangZhaoBlog Designed by YangZhao</p>
+    </div>
+</footer>
+
+<!--js模板-->
+<div th:fragment="script">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js"></script>
+    <script src="../static/lib/prism/prism.js" th:src="@{/lib/prism/prism.js}"></script>
+    <script src="../static/lib/tocbot/tocbot.min.js" th:src="@{/lib/tocbot/tocbot.min.js}"></script>
+    <script src="../static/lib/waypoints/jquery.waypoints.min.js" th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
+    <script src="../static/js/div.js" th:src="@{/js/div.js}"></script>
+</div>
+</body>
+</html>

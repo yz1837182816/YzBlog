@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="_fragments :: head">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>杨钊的个人博客，以致知点亮世界</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/diy.css">
+    <link rel="stylesheet" href="../static/css/typo.css">
+    <link rel="stylesheet" href="../static/css/animate.css">
+    <link rel="stylesheet" href="../static/lib/prism/prism.css">
+    <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css">
+</head>
+<body>
+<!--导航-->
+<nav th:replace="_fragments :: menu(0)" class="ui inverted attached segment m-padded-tb-mini m-opacity-mini m-shadow-small">
+    <!--菜单栏的容器-->
+    <div class="ui container">
+        <!--菜单栏 stackable：可堆叠的（手机端响应）-->
+        <div class="ui inverted secondary stackable menu">
+            <!--logo：teal深绿色 item条目-->
+            <h2 class="ui teal header item">
+                YangZhaoBlog
+            </h2>
+            <!--其他选项：xxx icon 图标-->
+            <a href="#" class="m-item item m-mobile-hide"><i class="home icon"></i>首页</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="clone icon"></i>归档</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="info icon"></i>关于我</a>
+            <!--搜索框：右对齐-->
+            <div class="right m-item item m-mobile-hide">
+                <div class="ui icon inverted transparent input">
+                    <input type="text" placeholder="搜索点我哦！">
+                    <i class="search link icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+
+<!--中间内容-->
+<div id="scr" class="m-container-small m-padded-tb-large animated fadeInDownBig">
+    <div class="ui container">
+        <!--头部-->
+        <div class="ui top attached segment">
+            <div class="ui horizontal link list">
+                <div class="item">
+                    <img src="../static/images/head.jpg" alt="" class="ui avatar image" th:src="@{/images/head.jpg}">
+                    <div class="content">
+                        <a href="#" class="header">
+                            杨钊
+                        </a>
+                    </div>
+                </div>
+                <div class="item">
+                    <i class="calendar icon"></i> <span th:text="${#dates.format(blog.getUpdateTime(),'yyyy-MM-dd')}"> 2020-4-11 </span>
+                </div>
+                <div class="item">
+                    <i class="eye icon"></i> <span th:text="${blog.getViews()}">5680</span>
+                </div>
+                <div class="item" th:if="${blog.getViews()} gt '100'">
+                    热度较高
+                </div>
+            </div>
+        </div>
+        <!--图片区域-->
+        <div class="ui attached segment">
+            <img src="../static/images/1.jpg" alt="" class="ui fluid image" th:src="@{|/images/${blog.getFirstPicture()}.jpg|}">
+        </div>
+        <!--内容-->
+        <div class="ui js-toc-content attached padded segment">
+            <!--原创声明-->
+            <div class="ui right aligned basic segment">
+                <div class="ui yellow label" th:text="${blog.getFlag()}">
+                    原创
+                </div>
+            </div>
+            <!--题目-->
+            <h2 class="ui center aligned header" th:text="${blog.getTitle()}">
+                辩论家与沉默者
+            </h2>
+            <!--文章-->
+            <div id="content" class="typo typo-selection js-toc-content m-padded-lr" th:utext="${blog.getContent()}">
+                <!--代码高亮插件-->
+                <pre><code class="language-css">p { color: red }</code></pre>
+                <pre>
+   这世上从没有什么三观正与不正，只有三观合与不合。
+   人们总是喜欢争辩，它好像一场低付出却有着高回报的博弈，喜欢在辩论胜利时那一霎间的快感，
+或是对生活中不快的变态宣泄。于马斯洛层次需求理论来解释，我们处在这个和平却浮躁的大时代，
+人类在满足了生理需求与安全需求之后，需求念想便上升到了尊重与自我实现。而互联网作为当代信息传播的最好媒介，
+一度的成为了生活中的失败者用以满足这种念想的最优途径。
+   我并非是来与谁争辩的，事实上，我在面对言语暴力时一向选择沉默。这是一种逃避吗？
+鲁迅先生弃医从文，从“救一个人”变为“救一群人”，却难以实现“救一类人”。
+这并非机缘巧合，而是必然存在的客观规律，其本质便是大众化的思维难以追随少数人所引领的时代潮流。
+具体而言，在这个法盲横行，全民“在线执法”的时代，网络上滋生出了三种“异类”。网民们称之为“键盘侠”、
+“杠精”和“圣母婊”。他们的雄心壮志活在虚拟世界，或是以“自由言论”为旌旗，批判他人的观点，亦可进行“道德”声讨，
+谴责无辜的大众。在他们的眼里，什么事都可以用暴力解决，在他们的心中，只有自我的认知才能奉为真理。
+   从古至今，人们都在客观真理中寻找自我。在我看来，自我的核心便是自我认同。
+部分唯物者认为，自然科学是万物的准则，在尊重客观规律的条件下能充分地发挥人的主观能动性。
+其实不然，在广义上来说，自我认同其实就是一个独立个体意识形态的集中体现。但残酷的是，瞬息万变的是世间万物，
+顽固不化是人的思维。即使人类在自然科学上的造诣早已到达了解析物质结构的层次，
+却始终难予以自我思维一个准确而合理的定义。因此我认为，人类潜在的能力应允主观能动性来修饰世间万物，
+却绝非能从根源上改变一个人的思维。
+   这便不得不提到我曾犯过一个原则性错误，我曾认为这世上有一模一样的两个东西。
+这一伪命题无论在自然科学或哲学都是行不通的：从微观的角度讲，万物皆可量子化，
+而最微小的两个量子级单位亦难尽相同。于宏观而言，与其说人类思维是智慧生物的象征，
+不如说人类思维其实是世界并发进程中机械的“进步”，而人类思维的不尽相同，在哲学世界中给予了合理性的解释，
+任何事物都具有矛盾的特殊性。其实，我们没必要去尝试改变他人的想法，学会恪守自我、尊崇本心，
+才是对自我思维最好的尊重。
+    我非常赞同卡耐基先生在《人性的弱点》中所说的一句话：“赢得争论的方法只有一个,
+那就是避免争论。”诚然，我们何必要以卵击石、用自我薄弱的力量去扭转亘古难变的“真理”呢？
+你所谓的“真理”，在超脱了这个世界的框架之外，一切的认知也将变得毫无意义。在这个角度上讲，
+你又有什么恪守自我的意义呢？真理的存亡贵在大多数人的认知，自我的坚守是唯我的尊重，
+我们不必要把这种狭义的自尊融入到他人的信条中。是的，人各有志，又何必强扭他人之志呢？
+    还记得冯友兰先生说过，人有四级境界，而很少有人能达到天人合一，道法自然的境界。
+但在我看来，超脱于自然、功利、道德境界之外的，并非天人合一，而是某种能在四种境界中任意交互能力的境界。
+它像是高位上的解析者，洞见市井人情百态，又能在穷苦大众中充当一员，遍历人间辛劳疾苦。在那样的境界下，
+一切的争论将变得毫无意义，坚定的泛我意志将化为无形的新生。我们又何必要满脸愁容，唾骂世间难有伯牙子期。
+我们何不保持沉默，活的潇洒呢？
+    愿你伟大的思维永不遭暴力的侵扰，愿你可贵的自我存一方不灭的净土。
+                </pre>
+            </div>
+            <!--标签-->
+            <div class="m-padded-lr">
+                <div class="ui basic teal left pointing label" th:each="tag: ${tags}">
+                    <span th:text="${tag.getName()}">方法论</span>&nbsp;
+                </div>
+            </div>
+            <!--赞赏-->
+            <div class="ui center aligned basic segment">
+                <div id="payButton" class="ui orange basic circular basic button">
+                    赞赏
+                </div>
+            </div>
+            <div class="ui payQR flowing popup transition hidden">
+                <div class="ui orange basic label">
+                    <div class="ui images" style="font-size: inherit !important;">
+                        <div class="image">
+                            <img src="../static/images/WeChatpay.jpg" th:src="@{/images/WeChatpay.jpg}" class="ui round bordered image" style="width: 120px">
+                            <div>微信支付</div>
+                        </div>
+                        <div class="image">
+                            <img src="../static/images/Alipay.jpg" th:src="@{/images/Alipay.jpg}" class="ui round bordered image" style="width: 120px">
+                            <div>支付宝支付</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--版权-->
+        <div class="ui attached positive message">
+            <div class="ui middle aligned grid">
+                <div class="eleven wide column">
+                    <ul class="list">
+                        <li>作者：杨钊</li>
+                        <li>发表时间：<span th:text="${#dates.format(blog.getCreateTime(),'yyyy年MM月dd日 HH:mm')}">2019-10-26 00:01</span></li>
+                        <li>最近更新时间：<span th:text="${#dates.format(blog.getUpdateTime(),'yyyy年MM月dd日 HH:mm')}">2019-10-26 00:01</span></li>
+                        <li>版权声明：自由转载-非商用-非衍生-保持署名（创意共享3.0许可证）</li>
+                        <li>公众号转载：请在文末添加作者微信二维码</li>
+                    </ul>
+                </div>
+                <div class="five wide column">
+                    <img src="../static/images/wechat.jpg" alt="" th:src="@{/images/wechat.jpg}" class="ui right floated rounded bordered image" style="width: 110px">
+                </div>
+            </div>
+        </div>
+        <!--评论区-->
+        <div class="ui bottom attached segment">
+            <div id="check" class="ui form">
+                <input type="hidden" name="blogId" th:value="${blog.getId()}">
+                <button id="check-btn" type="button" class="ui teal basic button m-mobile-wide">
+                    点击查看当前博客所有评论
+                </button>
+            </div>
+            <div id="comment-container" class="ui teal segment">
+                <div th:fragment="commentList">
+                    <div class="ui threaded comments" style="max-width: 100%;">
+                        <h3 class="ui dividing header">评论</h3>
+                        <div class="comment"  th:each="comment : ${comments}">
+                            <a class="avatar">
+                                <img src="../static/images/head.jpg" th:src="@{|/images/head/${comment.getAvatar()}.jpg|}">
+                            </a>
+                            <div class="content">
+                                <a class="author"><span th:text="${comment.getNickname()}">Matt</span></a>
+                                <div class="metadata">
+                                    <span class="date" th:text="${#dates.format(comment.getCreateTime(),'yyyy-MM-dd HH:mm')}">5:42</span>
+                                </div>
+                                <div class="text" th:text="${comment.getContent()}">
+                                    哇哦！厉害
+                                </div>
+<!--                                以后版本再添加回复功能-->
+<!--                               <div class="actions">-->
+<!--                                   <a class="reply" datacommentid="1" data-commentnickname="Matt" onclick="reply(this)">回复</a>-->
+<!--                               </div>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--评论-->
+            <div id="comment-form" class="ui form">
+                <input type="hidden" name="blogId" th:value="${blog.getId()}">
+<!--                <input type="text" name="parentComment.id" value="-1">-->
+                <div class="field">
+                    <textarea name="content" id="" placeholder="请输入评论信息..."></textarea>
+                </div>
+                <div class="fields">
+                    <div class="field m-mobile-wide m-margin-bottom-small">
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <input type="text" name="nickname" placeholder="姓名">
+                        </div>
+                    </div>
+                    <div class="field m-mobile-wide m-margin-bottom-small">
+                        <div class="ui left icon input">
+                            <i class="mail icon"></i>
+                            <input type="text" name="email" placeholder="邮箱（选填，方便联系您）">
+                        </div>
+                    </div>
+                    <div class="field m-margin-bottom-small m-mobile-wide">
+                        <button id="commentpost-btn" type="button" class="ui teal button m-mobile-wide">
+                            <i  class="edit icon"></i>发布
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--工具栏-->
+<div id="toolbar" class="m-padded m-fixed m-right-bottom" style="display: none">
+    <div class="ui vertical icon buttons">
+        <button type="button" class="ui toc teal button">目录</button>
+        <a class="ui teal button" onclick="$(window).scrollTo($('#comment-form'),650);">留言</a>
+        <div id="toTop-button" class="ui teal button"><i class="chevron up icon"></i></div>
+    </div>
+</div>
+
+<div class="ui toc-container flowing popup transition hidden" style="width: 250px!important;">
+    <ol class="js-toc">
+    </ol>
+</div>
+
+<!--底部-->
+<footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
+    <!--底部的容器 center aligned：居中-->
+    <div class="ui center aligned container">
+        <!--布局：全局分为16份 divided：包含分割线-->
+        <div class="ui inverted divided stackable grid">
+            <!--第一块：3份-->
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <p class="ui inverted">联系作者微信</p>
+                        <!--图片：round圆角-->
+                        <img src="../static/images/wechat.jpg" class="ui round image" alt="作者微信：yz1837182816"
+                             style="width: 120px">
+                    </div>
+                </div>
+            </div>
+            <!--第二块：3份-->
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced m-opacity-mini">最新博客</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">博客一号</a>
+                    <a href="#" class="item">博客二号</a>
+                    <a href="#" class="item">博客三号</a>
+                </div>
+            </div>
+            <!--第三块：3份-->
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced m-opacity-mini">联系作者</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">Email: yangzhaomm@163.com</a>
+                    <a href="#" class="item">微信: yz1837182816</a>
+                    <a href="#" class="item">QQ: 1837182816</a>
+                    <!--QQ推广链接-->
+                    <a target="_blank" href="tencent://message/?uin=1837182816&site=www.qq.com&menu=yes" class="item">点击此处QQ在线联系作者</a>
+                </div>
+            </div>
+            <!--第四块：7份-->
+            <div class="seven wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced m-opacity-mini">博客见解</h4>
+                <p class="m-text-thin m-text-spaced m-opacity-mini">
+                    hello world!
+                </p>
+            </div>
+        </div>
+        <!--分割线-->
+        <div class="ui inverted section divider"></div>
+        <!--商标版权-->
+        <p class="m-text-thin m-text-spaced m-opacity-big">Copyright &copy; 2020-2021 YangZhaoBlog Designed by YangZhao</p>
+    </div>
+</footer>
+
+<div th:replace="_fragments :: script">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js"></script>
+<script src="../static/lib/prism/prism.js"></script>
+<script src="../static/lib/tocbot/tocbot.min.js"></script>
+<script src="../static/lib/waypoints/jquery.waypoints.min.js"></script>
+</div>
+
+<script>
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+    $('#payButton').popup(
+        {
+            popup : $('.payQR.popup'),
+            on : 'click',
+            position : 'bottom center'
+        }
+    );
+
+    tocbot.init({
+        tocSelector: '.js-toc',
+        contentSelector: '.js-toc-content',
+        headingSelector: 'h1, h2, h3',
+    });
+
+    $('.toc.button').popup(
+        {
+            popup : $('.toc-container.popup'),
+            on : 'click',
+            position : 'left center'
+        }
+    );
+
+    $('#toTop-button').click(function () {
+        $(window).scrollTo(0,650);
+    });
+
+    var waypoint = new Waypoint({
+        element: document.getElementById('scr'),
+        handler: function (direction) {
+            if (direction === 'down'){
+                $('#toolbar').show(500);
+            }else {
+                $('#toolbar').hide(500);
+            }
+        }
+    });
+
+$('#comment-form').form({
+    fields: {
+        title: {
+            identifier: 'content',
+            rules: [{
+                type: 'empty',
+                prompt: '请输入评论内容'
+            }]
+        },
+        content: {
+            identifier: 'nickname',
+            rules: [{
+                type: 'empty',
+                prompt: '请输入您的名字（或昵称）'
+            }]
+        }
+    }
+});
+
+$('#commentpost-btn').click(function () {
+   var boo = $('#comment-form').form('validate form');
+   if (boo){
+       console.log("校验成功");
+       postData();
+   }else {
+       console.log("校验失败");
+   }
+});
+
+
+    $('#check-btn').click(function () {
+        $("#comment-container").load("/toComment",{
+            "blogId" : $("[name='blogId']").val(),
+            "nickname" : "null",
+            "email" : "null",
+            "content" : "null"
+        },function (responseTxt, statusTxt,xhr) {
+        })
+    });
+
+    function postData() {
+        $("#comment-container").load("/toComment",{
+            // "parent.id" : $("[name='parentComment.id']").val(),
+            "blogId" : $("[name='blogId']").val(),
+            "nickname" : $("[name='nickname']").val(),
+            "email" : $("[name='email']").val(),
+            "content" : $("[name='content']").val()
+        },function (responseTxt, statusTxt,xhr) {
+            $(window).scrollTo($('#comment-container'),650);
+            clearContent();
+        })
+    }
+
+function clearContent() {
+    $("[name='content']").val('');
+    $("[name='email']").val('');
+    // $("[name='parentComment.id']").val(-1);
+    $("[name='content']").attr("placeholder","请输入评论信息...");
+}
+
+// function reply(obj) {
+//     var commentId = $(obj).data('commentid');
+//     var commentNickname = $(obj).data('commentnickname');
+//     $("[name='content']").attr("placeholder","@"+commentNickname).focus();
+//     $("[name='parentComment.id']").val(commentId);
+//     $(window).scrollTo($('#comment-form'),650);
+// }
+</script>
+</body>
+
+</html>

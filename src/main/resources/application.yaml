@@ -1,0 +1,8 @@
+spring:
+  thymeleaf:
+    cache: false
+  profiles:
+    active: pro
+mybatis:
+  type-aliases-package: com.yz.pojo
+  mapper-locations: classpath:mybatis/mapper/*.xml
